@@ -11,9 +11,12 @@ push: build
 
 deploy: push
 	kubectl --namespace="default" set image deploy/openstack-token-test main=registry.usw1.viasat.cloud/openstack-token-test:${TAG}
+	kubectl --namespace="default" rollout status deploy/openstack-token-test
 
 create-deploy: push
 	docker tag registry.usw1.viasat.cloud/openstack-token-test:${TAG} registry.usw1.viasat.cloud/openstack-token-test:latest
 	docker push registry.usw1.viasat.cloud/openstack-token-test:latest
 	-kubectl --namespace="default" create -f auth-secrets.yml
 	kubectl --namespace="default" create -f deployment.yml
+	kubectl --namespace="default" rollout status deploy/openstack-token-test
+	kubectl --namespace="default" logs --follow $(kubectl --namespace=default get pods | grep openstack-token-test | awk '{print $1}')

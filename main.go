@@ -46,17 +46,38 @@ func main() {
   fmt.Println("authenticating Provider")
   err = openstack.Authenticate(provider, authOptions())
   if err != nil {
-    fmt.Println("failed to authenticate: %v", err)
+    fmt.Printf("failed to authenticate: %v\n", err)
     os.Exit(1)
   }
 
   for {
-    fmt.Printf("Starting loop at %s", time.Now().Format("Mon Jan 2 15:04:05 -0700 MST 2006"))
+    fmt.Printf("Starting loop at %s\n", time.Now().Format("Mon Jan 2 15:04:05 -0700 MST 2006"))
     err = doLoop()
     if err != nil {
-      fmt.Println("failed on loop: %v", err)
+      fmt.Printf("failed on loop: %v\n", err)
+      time.Sleep(1 * time.Hour) // so I can still use `k logs`
       os.Exit(1)
     }
+    fmt.Printf("Loop completed at %s\n", time.Now().Format("Mon Jan 2 15:04:05 -0700 MST 2006"))
+
+    fmt.Println("Doing a reauth to see if it triggers bad token bug")
+    err = provider.ReauthFunc()
+    if err != nil {
+      fmt.Printf("failed to reauth: %v\n", err)
+      time.Sleep(1 * time.Hour) // so I can still use `k logs`
+      os.Exit(1)
+    }
+    time.Sleep(5 * time.Second) // time enough to fill in the catalog?
+    fmt.Println("Done with reauth")
+
+    fmt.Printf("Starting loop at %s\n", time.Now().Format("Mon Jan 2 15:04:05 -0700 MST 2006"))
+    err = doLoop()
+    if err != nil {
+      fmt.Printf("failed on loop: %v\n", err)
+      time.Sleep(1 * time.Hour) // so I can still use `k logs`
+      os.Exit(1)
+    }
+    fmt.Printf("Loop completed at %s\n", time.Now().Format("Mon Jan 2 15:04:05 -0700 MST 2006"))
 
     fmt.Println("now sleeping for an hour...")
     time.Sleep(1 * time.Hour)
