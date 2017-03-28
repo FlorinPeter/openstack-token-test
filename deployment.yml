@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: openstack-token-test
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: main
+        image: registry.usw1.viasat.cloud/openstack-token-test
+        env:
+        - name: OS_AUTH_URL
+          valueFrom:
+            secretKeyRef:
+              name: openstack-token-test-auth
+              key: OS_AUTH_URL
+        - name: OS_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: openstack-token-test-auth
+              key: OS_USERNAME
+        - name: OS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: openstack-token-test-auth
+              key: OS_PASSWORD
