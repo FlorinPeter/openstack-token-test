@@ -74,6 +74,10 @@ func (p Pager) fetchNextPage(url string) (Page, error) {
 		return nil, err
 	}
 
+	if resp != nil {
+		fmt.Printf("headers: %v\n", resp.Header)
+	}
+
 	remembered, err := PageResultFrom(resp)
 	if err != nil {
 		return nil, err

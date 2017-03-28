@@ -6,23 +6,52 @@ metadata:
 spec:
   replicas: 1
   template:
+    metadata:
+      labels:
+        app: gophercloud-test
     spec:
       containers:
       - name: main
-        image: registry.usw1.viasat.cloud/openstack-token-test
+        image: registry.usw1.viasat.cloud/openstack-token-test:latest
+        imagePullPolicy: Always
         env:
         - name: OS_AUTH_URL
           valueFrom:
             secretKeyRef:
-              name: openstack-token-test-auth
               key: OS_AUTH_URL
+              name: openstack-token-test-auth
         - name: OS_USERNAME
           valueFrom:
             secretKeyRef:
-              name: openstack-token-test-auth
               key: OS_USERNAME
+              name: openstack-token-test-auth
         - name: OS_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: openstack-token-test-auth
               key: OS_PASSWORD
+              name: openstack-token-test-auth
+        - name: OS_TENANT_ID
+          valueFrom:
+            secretKeyRef:
+              key: OS_TENANT_ID
+              name: openstack-token-test-auth
+        - name: OS_PROJECT_DOMAIN_NAME
+          valueFrom:
+            secretKeyRef:
+              key: OS_PROJECT_DOMAIN_NAME
+              name: openstack-token-test-auth
+        - name: OS_USER_DOMAIN_NAME
+          valueFrom:
+            secretKeyRef:
+              key: OS_USER_DOMAIN_NAME
+              name: openstack-token-test-auth
+        - name: OS_REGION_NAME
+          valueFrom:
+            secretKeyRef:
+              key: OS_REGION_NAME
+              name: openstack-token-test-auth
+        - name: OS_PROJECT_NAME
+          valueFrom:
+            secretKeyRef:
+              key: OS_PROJECT_NAME
+              name: openstack-token-test-auth
