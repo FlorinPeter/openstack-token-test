@@ -88,7 +88,7 @@ func main() {
     fmt.Printf("Loop completed at %s\n", time.Now().Format("Mon Jan 2 15:04:05 -0700 MST 2006"))
 
     fmt.Println("now sleeping for an hour...")
-    time.Sleep(1 * time.Hour)
+    time.Sleep(60 * time.Second)
 
   }
 
