@@ -26,8 +26,7 @@ RUN export GOROOT=/usr/local/go && \
     go get && \
     go build -v && \
     ls -la && \
-    rm -rf /tmp/go && \
-    cp openstack-token-test /usr/local/bin/
-    
+    cp openstack-token-test /usr/local/bin/ && \
+    rm -rf /tmp/go 
     
 CMD ["openstack-token-test"]
