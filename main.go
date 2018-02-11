@@ -39,8 +39,6 @@ func main() {
   fmt.Println("starting openstack-token test")
 
   config := &tls.Config{InsecureSkipVerify: true}
-	//transport := &http.Transport{TLSClientConfig: config}
-	//client.HTTPClient.Transport = transport
   
   fmt.Println("creating NewClient")
   provider, err = openstack.NewClient(os.Getenv("OS_AUTH_URL"))
@@ -88,7 +86,7 @@ func main() {
     fmt.Printf("Loop completed at %s\n", time.Now().Format("Mon Jan 2 15:04:05 -0700 MST 2006"))
 
     fmt.Println("now sleeping for an hour...")
-    time.Sleep(60 * time.Second)
+    time.Sleep(1 * time.Hour)
 
   }
 
