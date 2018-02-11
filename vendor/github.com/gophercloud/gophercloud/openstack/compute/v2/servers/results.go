@@ -19,17 +19,11 @@ type serverResult struct {
 
 // Extract interprets any serverResult as a Server, if possible.
 func (r serverResult) Extract() (*Server, error) {
-	var s Server
+	var s struct {
+		Server *Server `json:"server"`
+	}
 	err := r.ExtractInto(&s)
-	return &s, err
-}
-
-func (r serverResult) ExtractInto(v interface{}) error {
-	return r.Result.ExtractIntoStructPtr(v, "server")
-}
-
-func ExtractServersInto(r pagination.Page, v interface{}) error {
-	return r.(ServerPage).Result.ExtractIntoSlicePtr(v, "servers")
+	return s.Server, err
 }
 
 // CreateResult temporarily contains the response from a Create call.
@@ -227,9 +221,11 @@ func (r ServerPage) NextPageURL() (string, error) {
 
 // ExtractServers interprets the results of a single page from a List() call, producing a slice of Server entities.
 func ExtractServers(r pagination.Page) ([]Server, error) {
-	var s []Server
-	err := ExtractServersInto(r, &s)
-	return s, err
+	var s struct {
+		Servers []Server `json:"servers"`
+	}
+	err := (r.(ServerPage)).ExtractInto(&s)
+	return s.Servers, err
 }
 
 // MetadataResult contains the result of a call for (potentially) multiple key-value pairs.

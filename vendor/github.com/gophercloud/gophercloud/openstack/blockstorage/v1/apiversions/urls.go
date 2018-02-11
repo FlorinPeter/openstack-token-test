@@ -1,8 +1,8 @@
 package apiversions
 
 import (
-	"net/url"
 	"strings"
+	"net/url"
 
 	"github.com/gophercloud/gophercloud"
 )
