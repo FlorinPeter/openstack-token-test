@@ -4,6 +4,9 @@ import (
   "fmt"
   "os"
   "time"
+  "crypto/tls"
+	"net/http"
+  netutil "k8s.io/apimachinery/pkg/util/net"
 
   "github.com/gophercloud/gophercloud"
   "github.com/gophercloud/gophercloud/openstack"
@@ -35,6 +38,10 @@ func main() {
   var err error
   fmt.Println("starting openstack-token test")
 
+  config := &tls.Config{InsecureSkipVerify: true}
+	//transport := &http.Transport{TLSClientConfig: config}
+	//client.HTTPClient.Transport = transport
+  
   fmt.Println("creating NewClient")
   provider, err = openstack.NewClient(os.Getenv("OS_AUTH_URL"))
   if err != nil {
@@ -42,6 +49,8 @@ func main() {
     os.Exit(1)
   }
 
+  provider.HTTPClient.Transport = netutil.SetOldTransportDefaults(&http.Transport{TLSClientConfig: config})
+ 
   fmt.Println("authenticating Provider")
   err = openstack.Authenticate(provider, authOptions())
   if err != nil {
