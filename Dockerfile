@@ -22,6 +22,7 @@ RUN export GOROOT=/usr/local/go && \
     /usr/local/go/bin/go version && \
     ln -s /usr/local/go/bin/go /usr/local/bin/go && \
     cd /tmp/go/src/openstack-token-test/ && \
+    go get && \
     go build -v && \
     yum clean all && \
     rm -rf /tmp/go && \
