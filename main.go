@@ -16,7 +16,7 @@ import (
 
 var (
   provider *gophercloud.ProviderClient
-  region string = "eu-de" // appears to be set in the openstack cloud_config, not auto-discovered
+  region string = "" // appears to be set in the openstack cloud_config, not auto-discovered
 )
 
 func authOptions() gophercloud.AuthOptions {
@@ -98,9 +98,10 @@ func doLoop() (err error) {
   fmt.Println("doLoop called")
 
   fmt.Println("creating compute handle")
-  compute, err := openstack.NewComputeV2(provider, gophercloud.EndpointOpts{
-    Region: region,
-  })
+  //compute, err := openstack.NewComputeV2(provider, gophercloud.EndpointOpts{
+    //Region: region,
+  //})
+  compute, err := openstack.NewComputeV2(provider)
   if err != nil {
     return
   }
