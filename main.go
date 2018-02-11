@@ -26,7 +26,7 @@ func authOptions() gophercloud.AuthOptions {
     TenantName:       os.Getenv("OS_TENANT_NAME"), // known to be unset, will be "" // cfg.Global.TenantName,
     DomainID:         os.Getenv("OS_USER_DOMAIN_ID"), // known to be unset, will be "" // cfg.Global.DomainId,
     DomainName:       os.Getenv("OS_USER_DOMAIN_NAME"), // cfg.Global.DomainName,
-
+    Insecure: true,
     // Persistent service, so we need to be able to renew tokens.
     AllowReauth: true,
   }
