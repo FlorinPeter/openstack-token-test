@@ -7,6 +7,7 @@ RUN INSTALL_PKGS="git make" && \
     cd /tmp/go/ && \
     curl -LO https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz && \
     tar -zxf go1.8.3.linux-amd64.tar.gz && \
+    yum clean all && \
     mv go /usr/local/
 
 USER root
@@ -24,7 +25,7 @@ RUN export GOROOT=/usr/local/go && \
     cd /tmp/go/src/openstack-token-test/ && \
     go get && \
     go build -v && \
-    yum clean all && \
+    ls -la && \
     rm -rf /tmp/go && \
     cp openstack-token-test /usr/local/bin/
     
