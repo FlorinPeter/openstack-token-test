@@ -11,6 +11,9 @@ RUN INSTALL_PKGS="git make" && \
 
 USER root
 
+ADD main.go /tmp/go/src/openstack-token-test/
+ADD vendor /tmp/go/src/openstack-token-test/
+
 RUN export GOROOT=/usr/local/go && \
     export GOPATH=/tmp/go && \
     export GOOS=linux && \
@@ -18,9 +21,11 @@ RUN export GOROOT=/usr/local/go && \
     export CGO_ENABLED=1 && \
     /usr/local/go/bin/go version && \
     ln -s /usr/local/go/bin/go /usr/local/bin/go && \
+    cd /tmp/go/src/openstack-token-test/ && \
     go build -v && \
     yum clean all && \
     rm -rf /tmp/go && \
     cp openstack-token-test /usr/local/bin/
+    
     
 CMD ["openstack-token-test"]
