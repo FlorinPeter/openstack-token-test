@@ -16,7 +16,7 @@ import (
 
 var (
   provider *gophercloud.ProviderClient
-  region string = "eu-de-01" // appears to be set in the openstack cloud_config, not auto-discovered
+  region string = "eu-de" // appears to be set in the openstack cloud_config, not auto-discovered
 )
 
 func authOptions() gophercloud.AuthOptions {
