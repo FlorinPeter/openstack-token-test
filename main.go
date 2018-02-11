@@ -101,7 +101,9 @@ func doLoop() (err error) {
   //compute, err := openstack.NewComputeV2(provider, gophercloud.EndpointOpts{
     //Region: region,
   //})
-  compute, err := openstack.NewComputeV2(provider, gophercloud.EndpointOpts{})
+  compute, err := openstack.NewComputeV2(provider, gophercloud.EndpointOpts{
+	  Region: region,
+  })
   if err != nil {
     return
   }
