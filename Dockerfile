@@ -18,7 +18,7 @@ RUN export GOROOT=/usr/local/go && \
     export CGO_ENABLED=1 && \
     /usr/local/go/bin/go version && \
     ln -s /usr/local/go/bin/go /usr/local/bin/go && \
-    go build -v \
+    go build -v && \
     yum clean all && \
     rm -rf /tmp/go && \
     cp openstack-token-test /usr/local/bin/
